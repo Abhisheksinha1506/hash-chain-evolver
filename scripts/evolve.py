@@ -229,6 +229,12 @@ def evolve():
         return []
 
     print(f"Current commit: {commit_hash[:16]}...")
+
+    # Idempotency check: Ensure this hash hasn't been processed yet
+    state = load_state()
+    if state.get("last_processed_hash") == commit_hash:
+        print(f"⏭️  Already processed commit {commit_hash[:8]}. Skipping evolution.")
+        return []
     
     # Extract hash value (last byte, 0-255)
     hash_value = get_hash_value(commit_hash)
@@ -267,6 +273,11 @@ def evolve():
     else:
         result = delete_oldest_feature(hash_value, commit_hash)
         actions_taken.append(result)
+    
+    # Record this hash as processed to prevent duplicate runs
+    state = load_state() # Reload state in case actions modified it
+    state["last_processed_hash"] = commit_hash
+    save_state(state)
     
     # Always update README with stats
     update_readme_stats()

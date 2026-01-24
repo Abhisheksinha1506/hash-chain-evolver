@@ -149,4 +149,4 @@ def load_state():
         if state_file.exists():
             with open(state_file, "r") as f:
                 return json.load(f)
-    return {"features_created": 0, "features_deleted": 0, "refactors": 0}
+    return {"features_created": 0, "features_deleted": 0, "refactors": 0, "last_processed_hash": ""}
