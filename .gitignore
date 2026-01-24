@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+*$py.class
+state.json
+EVOLUTION_LOG.md
+features/
+docs/CHAIN_VISUALIZATION.md
+.DS_Store
