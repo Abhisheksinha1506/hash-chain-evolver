@@ -39,8 +39,11 @@ jobs:
           
           mkdir -p features docs
           
+          # Initialize state
           echo '{"features_created": 0, "features_deleted": 0, "refactors": 0}' > state.json
+          echo '{"features_created": 0, "features_deleted": 0, "refactors": 0}' > docs/state.json
           
+          # Initialize log
           cat > EVOLUTION_LOG.md << 'EOF'
           # Hash Chain Evolution Log
 
@@ -48,6 +51,8 @@ jobs:
 
           ---
           EOF
+          
+          cp EVOLUTION_LOG.md docs/EVOLUTION_LOG.md
       
       - name: Initialize README
         run: |
