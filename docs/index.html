@@ -4,124 +4,485 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hash Chain Evolution Dashboard</title>
+    <title>Hash Chain Evolution | Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
     <style>
+        :root {
+            --bg: #05070a;
+            --card-bg: rgba(17, 25, 40, 0.75);
+            --border: rgba(255, 255, 255, 0.1);
+            --accent: #00d2ff;
+            --accent-glow: rgba(0, 210, 255, 0.3);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Courier New', monospace;
-            background: #0d1117;
-            color: #c9d1d9;
-            padding: 20px;
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(0, 210, 255, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(0, 210, 255, 0.05) 0%, transparent 40%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 2rem;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        .container {
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        h1 {
-            color: #58a6ff;
-            border-bottom: 2px solid #21262d;
-            padding-bottom: 10px;
+        header {
+            margin-bottom: 4rem;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeInDown 0.8s forwards;
         }
 
-        .stats {
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
         }
 
         .stat-card {
-            background: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            padding: 15px;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
         }
 
-        .stat-value {
-            font-size: 2em;
-            color: #58a6ff;
-            font-weight: bold;
+        .stat-card:nth-child(1) {
+            animation: fadeInUp 0.6s 0.2s forwards;
+        }
+
+        .stat-card:nth-child(2) {
+            animation: fadeInUp 0.6s 0.3s forwards;
+        }
+
+        .stat-card:nth-child(3) {
+            animation: fadeInUp 0.6s 0.4s forwards;
+        }
+
+        .stat-card:nth-child(4) {
+            animation: fadeInUp 0.6s 0.5s forwards;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 210, 255, 0.4);
+            box-shadow: 0 10px 30px -10px var(--accent-glow);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+
+        .stat-card:hover::before {
+            transform: translateX(100%);
         }
 
         .stat-label {
-            color: #8b949e;
-            font-size: 0.9em;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            opacity: 0;
+            animation: fadeIn 1s 0.8s forwards;
+        }
+
+        .section-panel {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 24px;
+            background: var(--accent);
+            border-radius: 2px;
         }
 
         .timeline {
-            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
 
         .evolution-step {
-            background: #161b22;
-            border-left: 3px solid #58a6ff;
-            padding: 15px;
-            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: background 0.2s ease;
         }
 
-        .hash {
-            font-family: 'Courier New', monospace;
-            background: #0d1117;
-            padding: 2px 6px;
-            border-radius: 3px;
-            color: #f85149;
+        .evolution-step:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .step-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .step-number {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .step-timestamp {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .step-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .detail-item {
+            font-size: 0.9375rem;
+        }
+
+        .detail-label {
+            color: var(--text-secondary);
+            margin-right: 0.5rem;
+        }
+
+        .detail-value {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+
+        .action-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .action-create {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .action-delete {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .action-refactor {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .action-optimize {
+            background: rgba(0, 210, 255, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(0, 210, 255, 0.2);
+        }
+
+        .loader {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .stat-value {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 
 <body>
-    <h1>🧬 Hash Chain Evolution Dashboard</h1>
+    <div class="container">
+        <header>
+            <h1>Hash Chain Evolution</h1>
+            <p class="subtitle">A self-evolving repository governed by cryptographic determinism. No human intervention.
+                Pure mathematical growth.</p>
+        </header>
 
-    <div class="stats">
-        <div class="stat-card">
-            <div class="stat-value" id="steps">-</div>
-            <div class="stat-label">Evolution Steps</div>
+        <div class="stats-grid" id="stats-container">
+            <div class="stat-card">
+                <p class="stat-label">Steps Taken</p>
+                <p class="stat-value" id="steps-val">0</p>
+            </div>
+            <div class="stat-card">
+                <p class="stat-label">Active Features</p>
+                <p class="stat-value" id="active-val">0</p>
+            </div>
+            <div class="stat-card">
+                <p class="stat-label">Features Created</p>
+                <p class="stat-value" id="created-val">0</p>
+            </div>
+            <div class="stat-card">
+                <p class="stat-label">Features Deleted</p>
+                <p class="stat-value" id="deleted-val">0</p>
+            </div>
         </div>
-        <div class="stat-card">
-            <div class="stat-value" id="features">-</div>
-            <div class="stat-label">Active Features</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-value" id="created">-</div>
-            <div class="stat-label">Features Created</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-value" id="deleted">-</div>
-            <div class="stat-label">Features Deleted</div>
-        </div>
-    </div>
 
-    <div class="timeline">
-        <h2>Recent Evolution</h2>
-        <div id="timeline-content">Loading...</div>
+        <div class="main-content">
+            <section class="section-panel">
+                <h2>Recent Evolution History</h2>
+                <div id="timeline" class="timeline">
+                    <div class="loader">
+                        <div class="spinner"></div>
+                        <p style="color: var(--text-secondary)">Scanning hash chain...</p>
+                    </div>
+                </div>
+            </section>
+        </div>
     </div>
 
     <script>
-        // Fetch and display state
-        fetch('./state.json')
-            .then(r => r.json())
-            .then(data => {
-                document.getElementById('created').textContent = data.features_created || 0;
-                document.getElementById('deleted').textContent = data.features_deleted || 0;
-                document.getElementById('features').textContent =
-                    (data.features_created || 0) - (data.features_deleted || 0);
-            })
-            .catch(e => console.log("State not found yet"));
+        async function loadDashboard() {
+            try {
+                // Fetch state with Cache-Busting
+                const stateRes = await fetch('./state.json?t=' + Date.now());
+                if (stateRes.ok) {
+                    const data = await stateRes.json();
+                    document.getElementById('created-val').textContent = data.features_created || 0;
+                    document.getElementById('deleted-val').textContent = data.features_deleted || 0;
+                    document.getElementById('active-val').textContent = (data.features_created || 0) - (data.features_deleted || 0);
+                }
 
-        // Parse evolution log
-        fetch('./EVOLUTION_LOG.md')
-            .then(r => r.text())
-            .then(log => {
-                const steps = log.match(/## Evolution Step \d+/g);
-                document.getElementById('steps').textContent = steps ? steps.length : 0;
+                // Fetch log with Cache-Busting
+                const logRes = await fetch('./EVOLUTION_LOG.md?t=' + Date.now());
+                if (logRes.ok) {
+                    const text = await logRes.text();
+                    parseLog(text);
+                } else {
+                    document.getElementById('timeline').innerHTML = `<p style="text-align: center; color: var(--text-secondary); padding: 2rem;">No evolution history found. Initializing genesis...</p>`;
+                }
+            } catch (err) {
+                console.error("Dashboard failed to load:", err);
+                document.getElementById('timeline').innerHTML = `<p style="text-align: center; color: var(--danger); padding: 2rem;">Error accessing hash chain. Check if Genesis has run.</p>`;
+            }
+        }
 
-                // Display recent steps
-                const entries = log.split('## Evolution Step').slice(-6).reverse();
-                const timeline = document.getElementById('timeline-content');
-                timeline.innerHTML = entries.map(entry => {
-                    if (!entry.trim()) return '';
-                    return `<div class="evolution-step">## Evolution Step ${entry}</div>`;
-                }).join('');
-            })
-            .catch(e => console.log("Log not found yet"));
+        function parseLog(content) {
+            const sections = content.split('## Evolution Step').slice(1).reverse();
+            document.getElementById('steps-val').textContent = sections.length;
+
+            const timeline = document.getElementById('timeline');
+            timeline.innerHTML = '';
+
+            if (sections.length === 0) {
+                timeline.innerHTML = `<p style="text-align: center; color: var(--text-secondary); padding: 2rem;">Genesis block initialized. Awaiting first evolution step.</p>`;
+                return;
+            }
+
+            sections.slice(0, 10).forEach(section => {
+                const lines = section.trim().split('\n');
+                const stepNum = lines[0].trim();
+
+                const meta = {};
+                lines.forEach(line => {
+                    if (line.includes('Timestamp:')) meta.timestamp = line.split('Timestamp:**')[1].trim();
+                    if (line.includes('Commit Hash:')) meta.hash = line.split('Commit Hash:**')[1].replace(/`/g, '').trim();
+                    if (line.includes('Hash Value:')) meta.value = line.split('Hash Value:**')[1].trim();
+                    if (line.includes('Action:')) meta.action = line.split('Action:**')[1].trim();
+                    if (line.includes('Details:')) meta.details = line.split('Details:**')[1].trim();
+                });
+
+                const actionClass = getActionClass(meta.action);
+
+                const stepHtml = `
+                    <div class="evolution-step">
+                        <div class="step-header">
+                            <span class="step-number">STEP #${stepNum}</span>
+                            <span class="step-timestamp">${meta.timestamp || ''}</span>
+                        </div>
+                        <div class="step-details">
+                            <div class="detail-item">
+                                <span class="detail-label">ACTION:</span>
+                                <span class="action-tag ${actionClass}">${meta.action || 'UNKNOWN'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">HASH:</span>
+                                <span class="detail-value">${meta.hash || ''}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">VALUE:</span>
+                                <span class="detail-value">${meta.value || ''}</span>
+                            </div>
+                        </div>
+                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary)">
+                            ${meta.details || ''}
+                        </p>
+                    </div>
+                `;
+                timeline.innerHTML += stepHtml;
+            });
+        }
+
+        function getActionClass(action) {
+            if (!action) return '';
+            const a = action.toLowerCase();
+            if (a.includes('create')) return 'action-create';
+            if (a.includes('delete')) return 'action-delete';
+            if (a.includes('refactor')) return 'action-refactor';
+            if (a.includes('optimize')) return 'action-optimize';
+            return '';
+        }
+
+        loadDashboard();
     </script>
 </body>
 
