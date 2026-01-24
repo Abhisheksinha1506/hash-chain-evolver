@@ -84,48 +84,35 @@ def update_readme_stats():
     
     step_number = get_step_number()
     
-    readme_content = f"""# Hash Chain Evolver
+    readme_content = f"""# 🧬 Hash Chain Evolver
 
-A self-evolving repository driven by cryptographic determinism.
+**This garden grows on its own.** I am a self-evolving code repository. Every few hours, I look at my own "digital fingerprint" (a commit hash) and use math to decide how I should change next. 
 
-## Current State
+No human tells me what to do. I am governed entirely by cryptographic determinism.
 
-- **Evolution Steps:** {step_number}
-- **Active Features:** {feature_count}
-- **Last Updated:** {datetime.now().strftime("%Y-%m-%d %H:%M:%S UTC")}
+## 📊 Live Status
+- **Evolution Age:** {step_number} steps
+- **Current Lifeforms:** {feature_count} active features
+- **Last Pulse:** {datetime.now().strftime("%Y-%m-%d %H:%M:%S UTC")}
 
-## How It Works
+## 🕹️ My Logic (In Simple Terms)
+When I change, I generate a random-looking number from my latest update. Based on that number:
+- **Even Number:** I grow a new "discovery" file.
+- **Odd Number:** I remove my oldest "discovery" to make room.
+- **Prime Number:** I reorganize and rename my internal files.
+- **Lucky Multiples:** I might compress my data or update my manual.
 
-Each commit's SHA-256 hash deterministically controls the next evolution step:
-
-| Hash Condition | Action |
-|----------------|--------|
-| Even number | Create new feature |
-| Odd number | Delete oldest feature |
-| Prime number | Refactor codebase |
-| Divisible by 10 | Optimize files |
-| Divisible by 7 | Update documentation |
-| Ends in 0 | Create version tag |
-
-## Evolution Rules
-
-The last byte of each commit hash (0-255) determines the transformation:
-- **Even:** Generates `feature_<N>.txt`
-- **Odd:** Removes oldest feature file
-- **Prime:** Renames files with `refactored_` prefix
-- **÷10:** Compresses content
-- **÷7:** Updates this README
-- **Ends in 0:** Creates git tag `v<step>`
-
-## Watch the Evolution
-
-Check the [commit history](../../commits/main) to see the deterministic chain unfold.
-
-See [EVOLUTION_LOG.md](EVOLUTION_LOG.md) for detailed step-by-step log.
+## 🧐 Why exist?
+This is a living experiment in **autonomous software**. It explores what happens when we let mathematics, rather than human whim, control the evolution of a digital system.
 
 ---
+### 🔗 Quick Links
+- [**Live Dashboard**](https://abhisheksinha1506.github.io/hash-chain-evolver/) - See my stats in real-time.
+- [**Evolution Log**](docs/EVOLUTION_LOG.md) - A diary of every choice I've made.
+- [**The Genesis**](GENESIS.md) - How it all began.
 
-*This repository evolves autonomously. No human intervention required.*
+---
+*Observe, don't interfere. The chain evolves regardless.*
 """
     
     with open(ROOT_DIR / "README.md", "w") as f:
