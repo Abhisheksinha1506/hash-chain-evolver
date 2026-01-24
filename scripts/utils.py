@@ -7,6 +7,9 @@ import json
 from datetime import datetime
 from pathlib import Path
 
+# Project root directory (one level up from scripts/)
+ROOT_DIR = Path(__file__).parent.parent.absolute()
+
 
 def is_prime(n):
     """Check if a number is prime."""
@@ -30,7 +33,7 @@ def get_hash_value(commit_hash):
 
 def log_evolution(action, hash_value, commit_hash, details):
     """Log evolution step to EVOLUTION_LOG.md."""
-    log_file = Path("EVOLUTION_LOG.md")
+    log_file = ROOT_DIR / "EVOLUTION_LOG.md"
     
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S UTC")
     
@@ -57,7 +60,7 @@ def log_evolution(action, hash_value, commit_hash, details):
 
 def get_step_number():
     """Get current evolution step number."""
-    log_file = Path("EVOLUTION_LOG.md")
+    log_file = ROOT_DIR / "EVOLUTION_LOG.md"
     if not log_file.exists():
         return 1
     
@@ -68,7 +71,7 @@ def get_step_number():
 
 def update_readme_stats():
     """Update README.md with current statistics."""
-    features_dir = Path("features")
+    features_dir = ROOT_DIR / "features"
     feature_count = len(list(features_dir.glob("*.txt"))) if features_dir.exists() else 0
     
     step_number = get_step_number()
@@ -117,20 +120,20 @@ See [EVOLUTION_LOG.md](EVOLUTION_LOG.md) for detailed step-by-step log.
 *This repository evolves autonomously. No human intervention required.*
 """
     
-    with open("README.md", "w") as f:
+    with open(ROOT_DIR / "README.md", "w") as f:
         f.write(readme_content)
 
 
 def save_state(state_data):
     """Save current state to JSON."""
-    state_file = Path("state.json")
+    state_file = ROOT_DIR / "state.json"
     with open(state_file, "w") as f:
         json.dump(state_data, indent=2, fp=f)
 
 
 def load_state():
     """Load state from JSON."""
-    state_file = Path("state.json")
+    state_file = ROOT_DIR / "state.json"
     if state_file.exists():
         with open(state_file, "r") as f:
             return json.load(f)

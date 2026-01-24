@@ -6,6 +6,9 @@ import json
 from datetime import datetime
 from pathlib import Path
 
+# Project root directory (one level up from scripts/)
+ROOT_DIR = Path(__file__).parent.parent.absolute()
+
 
 def check_recent_activity():
     """Check if evolution is happening regularly."""
@@ -38,7 +41,7 @@ def check_recent_activity():
 
 def check_state_integrity():
     """Verify state file is valid."""
-    state_file = Path("state.json")
+    state_file = ROOT_DIR / "state.json"
     
     if not state_file.exists():
         print("⚠️  NOTICE: state.json missing (expected before genesis)")

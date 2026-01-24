@@ -5,6 +5,9 @@ import subprocess
 import json
 from pathlib import Path
 
+# Project root directory (one level up from scripts/)
+ROOT_DIR = Path(__file__).parent.parent.absolute()
+
 
 def get_commit_chain():
     """Get all commits with their hashes."""
@@ -63,7 +66,7 @@ def generate_mermaid_diagram():
 if __name__ == "__main__":
     mermaid = generate_mermaid_diagram()
     
-    docs_dir = Path("docs")
+    docs_dir = ROOT_DIR / "docs"
     docs_dir.mkdir(exist_ok=True)
     
     output_file = docs_dir / "CHAIN_VISUALIZATION.md"

@@ -14,7 +14,8 @@ from utils import (
     update_readme_stats,
     save_state,
     load_state,
-    get_step_number
+    get_step_number,
+    ROOT_DIR
 )
 
 
@@ -34,7 +35,7 @@ def create_feature(hash_value, commit_hash):
     state = load_state()
     feature_id = state.get("features_created", 0) + 1
     
-    features_dir = Path("features")
+    features_dir = ROOT_DIR / "features"
     features_dir.mkdir(exist_ok=True)
     
     feature_file = features_dir / f"feature_{feature_id}.txt"
@@ -74,7 +75,7 @@ Random seed from hash: {hash(commit_hash) % 1000000}
 
 def delete_oldest_feature(hash_value, commit_hash):
     """Delete the oldest feature file."""
-    features_dir = Path("features")
+    features_dir = ROOT_DIR / "features"
     
     if not features_dir.exists():
         print("⚠️  No features directory")
@@ -106,7 +107,7 @@ def delete_oldest_feature(hash_value, commit_hash):
 
 def refactor_files(hash_value, commit_hash):
     """Refactor: rename files with prefixes."""
-    features_dir = Path("features")
+    features_dir = ROOT_DIR / "features"
     
     if not features_dir.exists():
         return "No features to refactor"
@@ -141,7 +142,7 @@ def refactor_files(hash_value, commit_hash):
 
 def optimize_files(hash_value, commit_hash):
     """Optimize: compress file content."""
-    features_dir = Path("features")
+    features_dir = ROOT_DIR / "features"
     
     if not features_dir.exists():
         return "No features to optimize"
