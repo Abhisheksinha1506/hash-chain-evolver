@@ -1,0 +1,85 @@
+name: Autonomous Evolution
+
+on:
+  schedule:
+    # Run daily at 00:00 UTC
+    - cron: '0 0 * * *'
+  
+  workflow_dispatch:  # Allow manual triggering for testing
+    inputs:
+      debug:
+        description: 'Enable debug output'
+        required: false
+        default: 'false'
+
+jobs:
+  evolve:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Configure Git
+        run: |
+          git config user.name "Hash Chain Bot"
+          git config user.email "hashchain@evolution.bot"
+      
+      - name: Display Current State
+        run: |
+          echo "🧬 Hash Chain Evolution Engine"
+          echo "=============================="
+          CURRENT_HASH=$(git rev-parse HEAD)
+          echo "Current commit: ${CURRENT_HASH:0:16}..."
+          echo "Hash value: $((16#${CURRENT_HASH: -2}))"
+          echo ""
+      
+      - name: Run Evolution Script
+        run: |
+          cd scripts
+          python3 evolve.py
+      
+      - name: Check for Changes
+        id: changes
+        run: |
+          if [[ -n $(git status -s) ]]; then
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "✅ Evolution produced changes"
+          else
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "⚠️  No changes produced (hash may have triggered no-op action)"
+          fi
+      
+      - name: Commit Evolution
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          PREV_HASH=$(git rev-parse HEAD)
+          HASH_VALUE=$((16#${PREV_HASH: -2}))
+          
+          git add -A
+          git commit -m "Evolution step: hash 0x$(printf '%02X' $HASH_VALUE) → action executed"
+          git push
+          
+          NEW_HASH=$(git rev-parse HEAD)
+          echo "Previous hash: ${PREV_HASH:0:16}"
+          echo "New hash: ${NEW_HASH:0:16}"
+          echo "Next evolution will be determined by: 0x${NEW_HASH: -2}"
+      
+      - name: Display Evolution Summary
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          echo ""
+          echo "✨ Evolution Complete!"
+          echo "===================="
+          cat state.json || echo "State file not found"
