@@ -50,6 +50,12 @@ jobs:
           cd scripts
           python3 evolve.py
       
+      - name: Update Chain Visualization
+        run: |
+          cd scripts
+          python3 visualize_chain.py
+          cd ..
+      
       - name: Check for Changes
         id: changes
         run: |
