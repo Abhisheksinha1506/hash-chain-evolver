@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,41 +14,49 @@
             max-width: 1200px;
             margin: 0 auto;
         }
+
         h1 {
             color: #58a6ff;
             border-bottom: 2px solid #21262d;
             padding-bottom: 10px;
         }
+
         .stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
             margin: 20px 0;
         }
+
         .stat-card {
             background: #161b22;
             border: 1px solid #30363d;
             border-radius: 6px;
             padding: 15px;
         }
+
         .stat-value {
             font-size: 2em;
             color: #58a6ff;
             font-weight: bold;
         }
+
         .stat-label {
             color: #8b949e;
             font-size: 0.9em;
         }
+
         .timeline {
             margin-top: 30px;
         }
+
         .evolution-step {
             background: #161b22;
             border-left: 3px solid #58a6ff;
             padding: 15px;
             margin: 10px 0;
         }
+
         .hash {
             font-family: 'Courier New', monospace;
             background: #0d1117;
@@ -57,9 +66,10 @@
         }
     </style>
 </head>
+
 <body>
     <h1>🧬 Hash Chain Evolution Dashboard</h1>
-    
+
     <div class="stats">
         <div class="stat-card">
             <div class="stat-value" id="steps">-</div>
@@ -86,23 +96,23 @@
 
     <script>
         // Fetch and display state
-        fetch('../state.json')
+        fetch('./state.json')
             .then(r => r.json())
             .then(data => {
                 document.getElementById('created').textContent = data.features_created || 0;
                 document.getElementById('deleted').textContent = data.features_deleted || 0;
-                document.getElementById('features').textContent = 
+                document.getElementById('features').textContent =
                     (data.features_created || 0) - (data.features_deleted || 0);
             })
             .catch(e => console.log("State not found yet"));
 
         // Parse evolution log
-        fetch('../EVOLUTION_LOG.md')
+        fetch('./EVOLUTION_LOG.md')
             .then(r => r.text())
             .then(log => {
                 const steps = log.match(/## Evolution Step \d+/g);
                 document.getElementById('steps').textContent = steps ? steps.length : 0;
-                
+
                 // Display recent steps
                 const entries = log.split('## Evolution Step').slice(-6).reverse();
                 const timeline = document.getElementById('timeline-content');
@@ -114,4 +124,5 @@
             .catch(e => console.log("Log not found yet"));
     </script>
 </body>
+
 </html>

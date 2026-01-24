@@ -32,8 +32,8 @@ def get_hash_value(commit_hash):
 
 
 def log_evolution(action, hash_value, commit_hash, details):
-    """Log evolution step to EVOLUTION_LOG.md."""
-    log_file = ROOT_DIR / "EVOLUTION_LOG.md"
+    """Log evolution step to EVOLUTION_LOG.md and docs/EVOLUTION_LOG.md."""
+    log_files = [ROOT_DIR / "EVOLUTION_LOG.md", ROOT_DIR / "docs" / "EVOLUTION_LOG.md"]
     
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S UTC")
     
@@ -49,18 +49,26 @@ def log_evolution(action, hash_value, commit_hash, details):
 ---
 """
     
-    if log_file.exists():
-        with open(log_file, "a") as f:
-            f.write(entry)
-    else:
-        with open(log_file, "w") as f:
-            f.write("# Hash Chain Evolution Log\n\n")
-            f.write(entry)
+    for log_file in log_files:
+        if log_file.exists():
+            with open(log_file, "a") as f:
+                f.write(entry)
+        else:
+            # Ensure directory exists for docs/
+            log_file.parent.mkdir(exist_ok=True)
+            with open(log_file, "w") as f:
+                f.write("# Hash Chain Evolution Log\n\n")
+                f.write(entry)
 
 
 def get_step_number():
     """Get current evolution step number."""
+    # Use root log as source of truth
     log_file = ROOT_DIR / "EVOLUTION_LOG.md"
+    if not log_file.exists():
+        # Fallback to docs log
+        log_file = ROOT_DIR / "docs" / "EVOLUTION_LOG.md"
+    
     if not log_file.exists():
         return 1
     
@@ -125,16 +133,20 @@ See [EVOLUTION_LOG.md](EVOLUTION_LOG.md) for detailed step-by-step log.
 
 
 def save_state(state_data):
-    """Save current state to JSON."""
-    state_file = ROOT_DIR / "state.json"
-    with open(state_file, "w") as f:
-        json.dump(state_data, indent=2, fp=f)
+    """Save current state to JSON in root and docs/."""
+    state_files = [ROOT_DIR / "state.json", ROOT_DIR / "docs" / "state.json"]
+    for state_file in state_files:
+        state_file.parent.mkdir(exist_ok=True)
+        with open(state_file, "w") as f:
+            json.dump(state_data, indent=2, fp=f)
 
 
 def load_state():
     """Load state from JSON."""
-    state_file = ROOT_DIR / "state.json"
-    if state_file.exists():
-        with open(state_file, "r") as f:
-            return json.load(f)
+    # Try root first, then docs
+    state_files = [ROOT_DIR / "state.json", ROOT_DIR / "docs" / "state.json"]
+    for state_file in state_files:
+        if state_file.exists():
+            with open(state_file, "r") as f:
+                return json.load(f)
     return {"features_created": 0, "features_deleted": 0, "refactors": 0}
