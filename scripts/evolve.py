@@ -82,7 +82,7 @@ def delete_oldest_feature(hash_value, commit_hash):
         print("⚠️  No features directory")
         return "No features to delete"
     
-    feature_files = sorted(features_dir.glob("feature_*.txt"))
+    feature_files = sorted(features_dir.glob("*.txt"))
     
     if not feature_files:
         print("⚠️  No features to delete")
@@ -114,7 +114,7 @@ def refactor_files(hash_value, commit_hash):
     if not features_dir.exists():
         return "No features to refactor"
     
-    feature_files = list(features_dir.glob("feature_*.txt"))
+    feature_files = list(features_dir.glob("*.txt"))
     
     if not feature_files:
         return "No features to refactor"
