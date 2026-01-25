@@ -91,12 +91,12 @@ def update_readme_stats():
 **Hash Chain Evolver** is an autonomous code repository. Unlike normal software that humans write and update, this project changes itself automatically using its own "digital DNA" (commit hashes).
 
 ## 🏮 The Simple Analogy
-Imagine a **self-playing piano**. Instead of a musician choosing the notes, the piano looks at the pattern of its last performance to decide what to play next. 
+Imagine a **self-playing piano**. Instead of a musician choosing the notes, the piano looks at its last performance to decide what to play next. 
 
 In this project:
-1. Every hour, the system wakes up.
-2. It looks at its latest "fingerprint" (the commit hash).
-3. It uses that code to decide whether to **birth** a new file, **decay** an old one, or **evolve** its internal structure.
+1. Every hour, the system wakes up and feels its own "pulse."
+2. This pulse is derived from its latest **Commit Hash** (a unique digital fingerprint).
+3. Based on that fingerprint, it decides to **Birth** new code, **Decay** old parts, or **Metamorphose** its entire structure.
 
 ## 📊 Live Status
 - **Evolution Age:** {step_number} steps
@@ -109,8 +109,13 @@ Every hour, a "mathematical pulse" (a number from 0-255) is extracted from the l
 - **Odd Number (DECAY):** The oldest file is recycled to make room.
 - **Prime Number (METAMORPHOSIS):** Internal files are renamed and reorganized.
 - **Lucky Multiples (PURIFICATION):** Data is cleaned and optimized.
-- **Pulse % 13 (INGESTION):** The system "hears" an Issue and weaves it into the chain.
-- **Pulse % 17 (MUTATION):** The system "absorbs" a Pull Request as a genetic mutation.
+- **Pulse % 13 (INGESTION):** The system "hears" a human **Issue** and weaves it into the chain.
+- **Pulse % 17 (MUTATION):** The system "absorbs" a **Pull Request** as a genetic mutation.
+
+## 🤝 How to "Interact"
+Even though the project is autonomous, you can still influence its growth:
+- **Whisper an Idea:** Open an [Issue](../../issues). If the mathematical pulse matches (multiple of 13), your idea will be turned into a file automatically.
+- **Propose a Mutation:** Submit a [Pull Request](../../pulls). If the system's pulse allows (multiple of 17), it will absorb your code into its history.
 
 ## 🧐 Why exist?
 This is an experiment in **deterministic chaos**. It's built to see how a system can evolve into a complex structure without a single human decision. It's half-code, half-art, and entirely math.
