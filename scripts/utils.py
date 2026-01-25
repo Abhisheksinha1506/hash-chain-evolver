@@ -86,30 +86,35 @@ def update_readme_stats():
     
     readme_content = f"""# 🧬 Hash Chain Evolver
 
-**This garden grows on its own.** I am a self-evolving code repository. Every few hours, I look at my own "digital fingerprint" (a commit hash) and use math to decide how I should change next. 
+### 🤖 The "Robot Gardener" Analogy
+Imagine a garden that is tended by a robot. Every few hours, the robot looks at its own **digital fingerprint** (a long string of numbers). 
+- If the fingerprint ends in an **even number**, the robot plants a new "discovery" file. 
+- If it's **odd**, it prunes the oldest file to make room. 
+- If it's a **prime number**, it reorganizes the entire garden layout.
 
-No human tells me what to do. I am governed entirely by cryptographic determinism.
+This repository is that garden—completely autonomous, growing and changing forever based on its own mathematical pulse.
 
-## 📊 Live Status
-- **Evolution Age:** {step_number} steps
-- **Current Lifeforms:** {feature_count} active features
-- **Last Pulse:** {datetime.now().strftime("%Y-%m-%d %H:%M:%S UTC")}
+## 📊 Live Garden Stats
+- **Total Growth Steps:** {step_number}
+- **Active Digital Lifeforms:** {feature_count}
+- **Last Pulse Detected:** {datetime.now().strftime("%Y-%m-%d %H:%M:%S UTC")}
 
-## 🕹️ My Logic (In Simple Terms)
-When I change, I generate a random-looking number from my latest update. Based on that number:
-- **Even Number:** I grow a new "discovery" file.
-- **Odd Number:** I remove my oldest "discovery" to make room.
-- **Prime Number:** I reorganize and rename my internal files.
-- **Lucky Multiples:** I might compress my data or update my manual.
+## 🕹️ The Game Rules
+Each evolution is determined by the "DNA" of the last update:
+- **🌱 BIRTH (Even):** A new feature is born.
+- **🍂 PRUNE (Odd):** Space is cleared for new growth.
+- **🔧 EVOLVE (Prime):** The codebase reorganizes itself.
+- **⚡ TIGHTEN (÷10):** Code is cleaned and optimized.
+- **📝 ARCHIVE (÷7):** Documentation is refreshed.
 
-## 🧐 Why exist?
-This is a living experiment in **autonomous software**. It explores what happens when we let mathematics, rather than human whim, control the evolution of a digital system.
+## 🧐 Why?
+To explore how software can evolve without human hands, using nothing but the pure, deterministic chaos of cryptographic hashes.
 
 ---
-### 🔗 Quick Links
-- [**Live Dashboard**](https://abhisheksinha1506.github.io/hash-chain-evolver/) - See my stats in real-time.
-- [**Evolution Log**](docs/EVOLUTION_LOG.md) - A diary of every choice I've made.
-- [**The Genesis**](GENESIS.md) - How it all began.
+### 🔗 Explore
+- [**Live Dashboard**](https://abhisheksinha1506.github.io/hash-chain-evolver/) - Visual status monitor.
+- [**Evolution Log**](docs/EVOLUTION_LOG.md) - The complete history of every change.
+- [**Genesis**](GENESIS.md) - The first heartbeat of the system.
 
 ---
 *Observe, don't interfere. The chain evolves regardless.*

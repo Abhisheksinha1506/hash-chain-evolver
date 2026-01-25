@@ -63,10 +63,10 @@ Random seed from hash: {hash(commit_hash) % 1000000}
     save_state(state)
     
     log_evolution(
-        "CREATE FEATURE",
+        "🌱 BIRTH",
         hash_value,
         commit_hash,
-        f"Created feature_{feature_id}.txt (even hash value)"
+        f"A new digital seed has sprouted! Created feature_{feature_id}.txt (triggered by even hash value {hash_value})."
     )
     
     print(f"✅ Created {feature_file}")
@@ -95,10 +95,10 @@ def delete_oldest_feature(hash_value, commit_hash):
     save_state(state)
     
     log_evolution(
-        "DELETE FEATURE",
+        "🍂 PRUNING",
         hash_value,
         commit_hash,
-        f"Deleted {oldest.name} (odd hash value)"
+        f"The garden needed space. Removed the oldest feature {oldest.name} (triggered by odd hash value {hash_value})."
     )
     
     print(f"🗑️  Deleted {oldest}")
@@ -130,10 +130,10 @@ def refactor_files(hash_value, commit_hash):
     save_state(state)
     
     log_evolution(
-        "REFACTOR",
+        "🔧 EVOLVE",
         hash_value,
         commit_hash,
-        f"Renamed {renamed_count} files with 'refactored_' prefix (prime hash value)"
+        f"Internal reorganization! Renamed {renamed_count} files with a fresh 'refactored_' prefix (triggered by prime hash value {hash_value})."
     )
     
     print(f"🔧 Refactored {renamed_count} files")
@@ -167,10 +167,10 @@ def optimize_files(hash_value, commit_hash):
         optimized_count += 1
     
     log_evolution(
-        "OPTIMIZE",
+        "⚡ TIGHTEN",
         hash_value,
         commit_hash,
-        f"Optimized {optimized_count} files (hash divisible by 10)"
+        f"Efficiency boost! Cleaned up and optimized {optimized_count} files (triggered by hash {hash_value} being a multiple of 10)."
     )
     
     print(f"⚡ Optimized {optimized_count} files")
@@ -182,10 +182,10 @@ def update_documentation(hash_value, commit_hash):
     update_readme_stats()
     
     log_evolution(
-        "UPDATE DOCS",
+        "📝 ARCHIVE",
         hash_value,
         commit_hash,
-        "Updated README.md with current statistics (hash divisible by 7)"
+        f"Self-reflection! Updated the instruction manual (README) with new stats (triggered by hash {hash_value} being a multiple of 7)."
     )
     
     print("📝 Updated documentation")
@@ -205,10 +205,10 @@ def create_version_tag(hash_value, commit_hash):
         subprocess.run(["git", "push", "--tags"], check=True)
         
         log_evolution(
-            "VERSION TAG",
+            "🏷️ MILESTONE",
             hash_value,
             commit_hash,
-            f"Created tag {tag_name} (hash ends in 0)"
+            f"A major milestone reached! Created version tag {tag_name} (triggered by hash value ending in 0)."
         )
         
         print(f"🏷️  Created tag {tag_name}")
