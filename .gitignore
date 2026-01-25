@@ -4,5 +4,4 @@ __pycache__/
 /state.json
 /EVOLUTION_LOG.md
 features/
-docs/CHAIN_VISUALIZATION.md
 .DS_Store

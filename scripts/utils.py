@@ -31,8 +31,8 @@ def get_hash_value(commit_hash):
     return int(last_byte, 16)  # Convert hex to decimal (0-255)
 
 
-def log_evolution(action, hash_value, commit_hash, details):
-    """Log evolution step to EVOLUTION_LOG.md and docs/EVOLUTION_LOG.md."""
+def log_evolution(action, hash_value, commit_hash, tech_msg, simple_msg):
+    """Log evolution step with technical and simple translations."""
     log_files = [ROOT_DIR / "EVOLUTION_LOG.md", ROOT_DIR / "docs" / "EVOLUTION_LOG.md"]
     
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S UTC")
@@ -42,9 +42,14 @@ def log_evolution(action, hash_value, commit_hash, details):
 
 - **Timestamp:** {timestamp}
 - **Commit Hash:** `{commit_hash[:8]}`
-- **Hash Value:** {hash_value} (0x{hash_value:02X})
-- **Action:** {action}
-- **Details:** {details}
+- **Pulse Value:** {hash_value} (0x{hash_value:02X})
+- **Action Mode:** {action}
+
+### ⚙️ Technical Context
+{tech_msg}
+
+### 🏮 Simple Translation
+{simple_msg}
 
 ---
 """
@@ -78,12 +83,26 @@ def get_step_number():
 
 
 def update_readme_stats():
-    """Update README.md with current statistics."""
+    """Update README.md with comprehensive statistics."""
+    state = load_state()
     features_dir = ROOT_DIR / "features"
     feature_count = len(list(features_dir.glob("*.txt"))) if features_dir.exists() else 0
     
     step_number = get_step_number()
+    mutations = state.get("mutations_absorbed", 0)
+    ingestions = state.get("issues_ingested", 0)
     
+    # Generate a "Mood" or status summary based on the last pulse
+    last_hash = state.get("last_processed_hash", "0")
+    last_val = int(last_hash[-2:], 16) if last_hash else 0
+    
+    status_summary = "The garden is currently stable and dormant."
+    if last_val % 2 == 0: status_summary = "The garden is in a state of active growth (Birth)."
+    else: status_summary = "The garden is experiencing natural decay."
+    if is_prime(last_val): status_summary = "The garden is undergoing a complex metamorphosis."
+    if mutations > 0 or ingestions > 0:
+        status_summary += f" It has recently absorbed {mutations + ingestions} human inputs."
+
     readme_content = f"""# 🧬 Hash Chain Evolver
 
 ### "A digital garden that grows by its own mathematical pulse."
@@ -100,8 +119,9 @@ In this project:
 
 ## 📊 Live Status
 - **Evolution Age:** {step_number} steps
-- **Current Lifeforms:** {feature_count} active features
-- **Last Pulse:** {datetime.now().strftime("%Y-%m-%d %H:%M:%S UTC")}
+- **Genetic Integrity:** {mutations} Mutations Absorbed | {ingestions} Discoveries Ingested
+- **Active Discovery:** {feature_count} features present
+- **Current Vibe:** {status_summary}
 
 ## 🕹️ The Rules of Growth
 Every hour, a "mathematical pulse" (a number from 0-255) is extracted from the latest commit:
@@ -151,4 +171,4 @@ def load_state():
         if state_file.exists():
             with open(state_file, "r") as f:
                 return json.load(f)
-    return {"features_created": 0, "features_deleted": 0, "refactors": 0, "last_processed_hash": ""}
+    return {"features_created": 0, "features_deleted": 0, "refactors": 0, "last_processed_hash": "", "mutations_absorbed": 0, "issues_ingested": 0}

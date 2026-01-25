@@ -66,6 +66,7 @@ Random seed from hash: {hash(commit_hash) % 1000000}
         "BIRTH",
         hash_value,
         commit_hash,
+        f"Created features/feature_{feature_id}.txt based on even hash value {hash_value}.",
         f"The mathematical pulse was EVEN ({hash_value}), triggering a new discovery. Lifeform feature_{feature_id}.txt has been birthed into the digital garden."
     )
     
@@ -98,6 +99,7 @@ def delete_oldest_feature(hash_value, commit_hash):
         "DECAY",
         hash_value,
         commit_hash,
+        f"Unlinked {oldest.name} triggered by odd hash value {hash_value}.",
         f"The mathematical pulse was ODD ({hash_value}), triggering a natural decay. Oldest lifeform {oldest.name} has been recycled back into the void."
     )
     
@@ -133,6 +135,7 @@ def refactor_files(hash_value, commit_hash):
         "METAMORPHOSIS",
         hash_value,
         commit_hash,
+        f"Applied 'refactored_' prefix to {renamed_count} files based on prime hash value {hash_value}.",
         f"The mathematical pulse was PRIME ({hash_value}), triggering a metamorphosis. {renamed_count} files have evolved with a 'refactored_' prefix."
     )
     
@@ -170,6 +173,7 @@ def optimize_files(hash_value, commit_hash):
         "PURIFICATION",
         hash_value,
         commit_hash,
+        f"Minified {optimized_count} files (removed double newlines) triggered by hash multiple of 10 ({hash_value}).",
         f"The mathematical pulse was a multiple of 10 ({hash_value}), triggering a purification. {optimized_count} files have been compressed and cleaned."
     )
     
@@ -185,6 +189,7 @@ def update_documentation(hash_value, commit_hash):
         "INSCRIPTION",
         hash_value,
         commit_hash,
+        f"Regenerated README.md templates based on hash multiple of 7 ({hash_value}).",
         "The mathematical pulse was a multiple of 7, triggering an inscription. The repository's scrolls (README.md) have been updated with new stats."
     )
     
@@ -208,6 +213,7 @@ def create_version_tag(hash_value, commit_hash):
             "MILESTONE",
             hash_value,
             commit_hash,
+            f"Git tag creation for v{step} triggered by hash ending in 0 ({hash_value}).",
             f"The pulse ended in 0 ({hash_value}), reaching a new milestone. Created version tag {tag_name} to mark this era."
         )
         
@@ -251,11 +257,17 @@ def ingest_environmental_nutrients(hash_value, commit_hash):
                 msg = f"The mathematical pulse was a multiple of 13 ({hash_value}), triggering an ingestion. Your discovery has been woven into the chain as `{feature_name}`."
                 subprocess.run(["gh", "issue", "close", str(num), "-c", msg], check=True)
                 
+                # Update state
+                state = load_state()
+                state["issues_ingested"] = state.get("issues_ingested", 0) + 1
+                save_state(state)
+                
                 log_evolution(
                     "INGESTION",
                     hash_value,
                     commit_hash,
-                    f"Consumed Issue #{num} ('{title}') by @{author}. Created {feature_name}."
+                    f"Parsed Issue #{num} '{title}' and created local asset features/{feature_name}.",
+                    f"The garden has 'heard' a human whisper (Issue #{num}). The idea for {title} has been ingested and birthed into the chain."
                 )
                 actions.append(f"Ingested Issue #{num}")
         except Exception as e:
@@ -291,11 +303,17 @@ def ingest_environmental_nutrients(hash_value, commit_hash):
                 msg = f"The mathematical pulse was a multiple of 17 ({hash_value}), triggering a genetic ingestion. Your mutation has been recorded in the garden as `{mutation_name}`."
                 subprocess.run(["gh", "pr", "close", str(num), "-c", msg], check=True)
                 
+                # Update state
+                state = load_state()
+                state["mutations_absorbed"] = state.get("mutations_absorbed", 0) + 1
+                save_state(state)
+                
                 log_evolution(
                     "MUTATION",
                     hash_value,
                     commit_hash,
-                    f"Absorbed PR #{num} ('{title}') by @{author} as a mutation."
+                    f"Recorded metadata for PR #{num} and closed as merged-by-evolution.",
+                    f"The garden has 'absorbed' a human mutation (PR #{num}). The genetic changes proposed in '{title}' are now part of our digital DNA."
                 )
                 actions.append(f"Absorbed PR #{num}")
         except Exception as e:
