@@ -86,35 +86,38 @@ def update_readme_stats():
     
     readme_content = f"""# 🧬 Hash Chain Evolver
 
-### 🤖 The "Robot Gardener" Analogy
-Imagine a garden that is tended by a robot. Every few hours, the robot looks at its own **digital fingerprint** (a long string of numbers). 
-- If the fingerprint ends in an **even number**, the robot plants a new "discovery" file. 
-- If it's **odd**, it prunes the oldest file to make room. 
-- If it's a **prime number**, it reorganizes the entire garden layout.
+### "A digital garden that grows by its own mathematical pulse."
 
-This repository is that garden—completely autonomous, growing and changing forever based on its own mathematical pulse.
+**Hash Chain Evolver** is an autonomous code repository. Unlike normal software that humans write and update, this project changes itself automatically using its own "digital DNA" (commit hashes).
 
-## 📊 Live Garden Stats
-- **Total Growth Steps:** {step_number}
-- **Active Digital Lifeforms:** {feature_count}
-- **Last Pulse Detected:** {datetime.now().strftime("%Y-%m-%d %H:%M:%S UTC")}
+## 🏮 The Simple Analogy
+Imagine a **self-playing piano**. Instead of a musician choosing the notes, the piano looks at the pattern of its last performance to decide what to play next. 
 
-## 🕹️ The Game Rules
-Each evolution is determined by the "DNA" of the last update:
-- **🌱 BIRTH (Even):** A new feature is born.
-- **🍂 PRUNE (Odd):** Space is cleared for new growth.
-- **🔧 EVOLVE (Prime):** The codebase reorganizes itself.
-- **⚡ TIGHTEN (÷10):** Code is cleaned and optimized.
-- **📝 ARCHIVE (÷7):** Documentation is refreshed.
+In this project:
+1. Every hour, the system wakes up.
+2. It looks at its latest "fingerprint" (the commit hash).
+3. It uses that code to decide whether to **birth** a new file, **decay** an old one, or **evolve** its internal structure.
 
-## 🧐 Why?
-To explore how software can evolve without human hands, using nothing but the pure, deterministic chaos of cryptographic hashes.
+## 📊 Live Status
+- **Evolution Age:** {step_number} steps
+- **Current Lifeforms:** {feature_count} active features
+- **Last Pulse:** {datetime.now().strftime("%Y-%m-%d %H:%M:%S UTC")}
+
+## 🕹️ The Rules of Growth
+Every hour, a "mathematical pulse" (a number from 0-255) is extracted from the latest commit:
+- **Even Number (BIRTH):** A new "discovery" file is created.
+- **Odd Number (DECAY):** The oldest file is recycled to make room.
+- **Prime Number (METAMORPHOSIS):** Internal files are renamed and reorganized.
+- **Lucky Multiples (PURIFICATION):** Data is cleaned and optimized.
+
+## 🧐 Why exist?
+This is an experiment in **deterministic chaos**. It's built to see how a system can evolve into a complex structure without a single human decision. It's half-code, half-art, and entirely math.
 
 ---
-### 🔗 Explore
-- [**Live Dashboard**](https://abhisheksinha1506.github.io/hash-chain-evolver/) - Visual status monitor.
-- [**Evolution Log**](docs/EVOLUTION_LOG.md) - The complete history of every change.
-- [**Genesis**](GENESIS.md) - The first heartbeat of the system.
+### 🔗 Watch the Growth
+- [**Live Dashboard**](https://abhisheksinha1506.github.io/hash-chain-evolver/) - See the statistics in real-time.
+- [**Evolution Log**](docs/EVOLUTION_LOG.md) - Read the diary of every pulse.
+- [**Chain Visualization**](docs/CHAIN_VISUALIZATION.md) - See the mathematical connections.
 
 ---
 *Observe, don't interfere. The chain evolves regardless.*

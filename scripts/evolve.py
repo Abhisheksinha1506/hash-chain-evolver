@@ -63,14 +63,14 @@ Random seed from hash: {hash(commit_hash) % 1000000}
     save_state(state)
     
     log_evolution(
-        "🌱 BIRTH",
+        "BIRTH",
         hash_value,
         commit_hash,
-        f"A new digital seed has sprouted! Created feature_{feature_id}.txt (triggered by even hash value {hash_value})."
+        f"The mathematical pulse was EVEN ({hash_value}), triggering a new discovery. Lifeform feature_{feature_id}.txt has been birthed into the digital garden."
     )
     
     print(f"✅ Created {feature_file}")
-    return f"Created feature_{feature_id}.txt"
+    return f"Birthed feature_{feature_id}.txt"
 
 
 def delete_oldest_feature(hash_value, commit_hash):
@@ -95,14 +95,14 @@ def delete_oldest_feature(hash_value, commit_hash):
     save_state(state)
     
     log_evolution(
-        "🍂 PRUNING",
+        "DECAY",
         hash_value,
         commit_hash,
-        f"The garden needed space. Removed the oldest feature {oldest.name} (triggered by odd hash value {hash_value})."
+        f"The mathematical pulse was ODD ({hash_value}), triggering a natural decay. Oldest lifeform {oldest.name} has been recycled back into the void."
     )
     
     print(f"🗑️  Deleted {oldest}")
-    return f"Deleted {oldest.name}"
+    return f"Recycled {oldest.name}"
 
 
 def refactor_files(hash_value, commit_hash):
@@ -130,14 +130,14 @@ def refactor_files(hash_value, commit_hash):
     save_state(state)
     
     log_evolution(
-        "🔧 EVOLVE",
+        "METAMORPHOSIS",
         hash_value,
         commit_hash,
-        f"Internal reorganization! Renamed {renamed_count} files with a fresh 'refactored_' prefix (triggered by prime hash value {hash_value})."
+        f"The mathematical pulse was PRIME ({hash_value}), triggering a metamorphosis. {renamed_count} files have evolved with a 'refactored_' prefix."
     )
     
     print(f"🔧 Refactored {renamed_count} files")
-    return f"Refactored {renamed_count} files"
+    return f"Evolved {renamed_count} files"
 
 
 def optimize_files(hash_value, commit_hash):
@@ -167,14 +167,14 @@ def optimize_files(hash_value, commit_hash):
         optimized_count += 1
     
     log_evolution(
-        "⚡ TIGHTEN",
+        "PURIFICATION",
         hash_value,
         commit_hash,
-        f"Efficiency boost! Cleaned up and optimized {optimized_count} files (triggered by hash {hash_value} being a multiple of 10)."
+        f"The mathematical pulse was a multiple of 10 ({hash_value}), triggering a purification. {optimized_count} files have been compressed and cleaned."
     )
     
     print(f"⚡ Optimized {optimized_count} files")
-    return f"Optimized {optimized_count} files"
+    return f"Purified {optimized_count} files"
 
 
 def update_documentation(hash_value, commit_hash):
@@ -182,14 +182,14 @@ def update_documentation(hash_value, commit_hash):
     update_readme_stats()
     
     log_evolution(
-        "📝 ARCHIVE",
+        "INSCRIPTION",
         hash_value,
         commit_hash,
-        f"Self-reflection! Updated the instruction manual (README) with new stats (triggered by hash {hash_value} being a multiple of 7)."
+        "The mathematical pulse was a multiple of 7, triggering an inscription. The repository's scrolls (README.md) have been updated with new stats."
     )
     
     print("📝 Updated documentation")
-    return "Updated documentation"
+    return "Inscribed new stats"
 
 
 def create_version_tag(hash_value, commit_hash):
@@ -205,14 +205,14 @@ def create_version_tag(hash_value, commit_hash):
         subprocess.run(["git", "push", "--tags"], check=True)
         
         log_evolution(
-            "🏷️ MILESTONE",
+            "MILESTONE",
             hash_value,
             commit_hash,
-            f"A major milestone reached! Created version tag {tag_name} (triggered by hash value ending in 0)."
+            f"The pulse ended in 0 ({hash_value}), reaching a new milestone. Created version tag {tag_name} to mark this era."
         )
         
         print(f"🏷️  Created tag {tag_name}")
-        return f"Created tag {tag_name}"
+        return f"Reached milestone {tag_name}"
     except subprocess.CalledProcessError:
         return "Tag creation skipped (may already exist)"
 
