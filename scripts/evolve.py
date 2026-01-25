@@ -217,6 +217,93 @@ def create_version_tag(hash_value, commit_hash):
         return "Tag creation skipped (may already exist)"
 
 
+def ingest_environmental_nutrients(hash_value, commit_hash):
+    """Ingest GitHub Issues and PRs based on mathematical triggers."""
+    actions = []
+    
+    # Lucky 13: Ingest Issues
+    if hash_value % 13 == 0:
+        try:
+            # Check for open issues
+            result = subprocess.run(
+                ["gh", "issue", "list", "--limit", "1", "--json", "number,title,author"],
+                capture_output=True,
+                text=True,
+                check=True
+            )
+            issues = json.loads(result.stdout)
+            
+            if issues:
+                issue = issues[0]
+                num = issue["number"]
+                title = issue["title"]
+                author = issue["author"]["login"]
+                
+                # Ingest the issue
+                feature_name = f"community_discovery_{num}.txt"
+                feature_path = ROOT_DIR / "features" / feature_name
+                content = f"# Community Discovery: {title}\n\nIngested from Issue #{num} by @{author}\nPulse: {hash_value}\nHash: {commit_hash[:16]}\n"
+                
+                with open(feature_path, "w") as f:
+                    f.write(content)
+                
+                # Close the issue
+                msg = f"The mathematical pulse was a multiple of 13 ({hash_value}), triggering an ingestion. Your discovery has been woven into the chain as `{feature_name}`."
+                subprocess.run(["gh", "issue", "close", str(num), "-c", msg], check=True)
+                
+                log_evolution(
+                    "INGESTION",
+                    hash_value,
+                    commit_hash,
+                    f"Consumed Issue #{num} ('{title}') by @{author}. Created {feature_name}."
+                )
+                actions.append(f"Ingested Issue #{num}")
+        except Exception as e:
+            print(f"⚠️  Issue ingestion failed: {e}")
+
+    # Genetic Prime 17: Ingest PRs
+    if hash_value % 17 == 0:
+        try:
+            # Check for open PRs
+            result = subprocess.run(
+                ["gh", "pr", "list", "--limit", "1", "--json", "number,title,author"],
+                capture_output=True,
+                text=True,
+                check=True
+            )
+            prs = json.loads(result.stdout)
+            
+            if prs:
+                pr = prs[0]
+                num = pr["number"]
+                title = pr["title"]
+                author = pr["author"]["login"]
+                
+                # Record the mutation
+                mutation_name = f"mutation_{num}.txt"
+                mutation_path = ROOT_DIR / "features" / mutation_name
+                content = f"# Genetic Mutation: {title}\n\nIngested from PR #{num} by @{author}\nPulse: {hash_value}\nHash: {commit_hash[:16]}\n"
+                
+                with open(mutation_path, "w") as f:
+                    f.write(content)
+                
+                # Close the PR
+                msg = f"The mathematical pulse was a multiple of 17 ({hash_value}), triggering a genetic ingestion. Your mutation has been recorded in the garden as `{mutation_name}`."
+                subprocess.run(["gh", "pr", "close", str(num), "-c", msg], check=True)
+                
+                log_evolution(
+                    "MUTATION",
+                    hash_value,
+                    commit_hash,
+                    f"Absorbed PR #{num} ('{title}') by @{author} as a mutation."
+                )
+                actions.append(f"Absorbed PR #{num}")
+        except Exception as e:
+            print(f"⚠️  PR ingestion failed: {e}")
+            
+    return actions
+
+
 def evolve():
     """Main evolution function."""
     print("🧬 Starting Hash Chain Evolution...")
@@ -242,7 +329,8 @@ def evolve():
     
     actions_taken = []
     
-    # Determine and execute actions based on hash properties
+    # Priority 0: Environmental Nutrients (Issues/PRs)
+    actions_taken.extend(ingest_environmental_nutrients(hash_value, commit_hash))
     
     # Priority 1: Version tag (ends in 0)
     if hash_value % 10 == 0 and hash_value > 0:

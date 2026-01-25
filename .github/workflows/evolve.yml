@@ -18,6 +18,8 @@ jobs:
     
     permissions:
       contents: write
+      issues: write
+      pull-requests: write
       
     steps:
       - name: Checkout repository
@@ -46,6 +48,8 @@ jobs:
           echo ""
       
       - name: Run Evolution Script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cd scripts
           python3 evolve.py
