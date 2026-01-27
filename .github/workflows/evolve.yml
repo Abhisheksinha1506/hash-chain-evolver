@@ -1,3 +1,5 @@
+concurrency: hash-chain-evolver-evolution
+
 name: Autonomous Evolution
 
 on:
