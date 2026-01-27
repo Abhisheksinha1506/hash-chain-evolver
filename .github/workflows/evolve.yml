@@ -2,8 +2,8 @@ name: Autonomous Evolution
 
 on:
   schedule:
-    # Run every hour
-    - cron: '0 * * * *'
+    # Run every hour (IST: On the hour)
+    - cron: '30 * * * *'
   
   workflow_dispatch:  # Allow manual triggering for testing
     inputs:
