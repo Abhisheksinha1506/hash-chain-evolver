@@ -18,6 +18,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: main
+        with:
           fetch-depth: 0 # Important for git history
           
       - name: Set up Python
